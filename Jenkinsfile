@@ -24,7 +24,7 @@ pipeline {
                 script {
                     try {
                         withSonarQubeEnv('sonar'){
-                            sh "./gradlew sonar -Dsonar.host.url=http://localhost:9000 -Dlogin="
+                            sh "./gradlew sonar -Dsonar.host.url=http://localhost:9000 -Dlogin=f52d06077ed22033c3bf0a79933e5dc98890b03d"
                         }
                     } catch (Exception e) {
                         echo "SonarQube analysis failed: ${e.message}"
