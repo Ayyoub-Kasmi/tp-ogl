@@ -1,17 +1,7 @@
 pipeline {
     agent any
 
-    environment {
-        SONAR_HOST_URL = 'http://197.140.142.82:9000'
-    }
-
     stages {
-        stage('Checkout') {
-            steps {
-                git branch: 'master', url: 'https://github.com/Ayyoub-Kasmi/tp-ogl.git'
-            }
-        }
-
         stage('Test') {
             steps {
                 echo 'Running unit tests...'
