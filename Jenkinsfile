@@ -5,6 +5,7 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Running unit tests...'
+                sh 'chmod +x gradlew'
                 script {
                     try {
                         sh './gradlew test'
