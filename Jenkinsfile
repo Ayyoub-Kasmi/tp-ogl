@@ -23,8 +23,8 @@ pipeline {
                 echo 'Running SonarQube analysis...'
                 script {
                     try {
-                        withSonarQubeEnv('sonar'){
-                            sh "./gradlew sonar"
+                        withSonarQubeEnv('sonar-scanner'){
+                            sh "./gradlew sonar -Dsonar.host.url=http://localhost:9000"
                         }
                     } catch (Exception e) {
                         echo "SonarQube analysis failed: ${e.message}"
