@@ -83,29 +83,6 @@ publishing {
     }
 }
 
-// Define the notification function
-def notifySlack(String message) {
-    def webhookUrl = "https://hooks.slack.com/services/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"
-
-    def payload = [text: message]
-    def jsonPayload = new groovy.json.JsonBuilder(payload).toString()
-
-    def url = new URL(webhookUrl)
-    def connection = url.openConnection()
-    connection.requestMethod = "POST"
-    connection.doOutput = true
-    connection.setRequestProperty("Content-Type", "application/json")
-
-    connection.outputStream.withWriter("UTF-8") { writer ->
-        writer.write(jsonPayload)
-    }
-
-    if (connection.responseCode != 200) {
-        throw new GradleException("Failed to send Slack notification: ${connection.responseCode} ${connection.responseMessage}")
-    }
-}
-
-
 def notifyTeamByEmail(String messageText) {
     def props = new Properties()
     props.put("mail.smtp.auth", "true")
@@ -156,7 +133,6 @@ def notifyTeamByEmail(String messageText) {
 
 publish {
     doLast {
-        notifySlack("Publish successful for project ${project.name}, version ${project.version}!")
         notifyTeamByEmail("Publish successful for project ${project.name}, version ${project.version}")
     }
 }
