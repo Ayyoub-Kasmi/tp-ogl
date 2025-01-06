@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'master', url: 'https://github.com/NaDdjg/API-Java-with-Jenkins.git'
+                git branch: 'master', url: 'https://github.com/Ayyoub-Kasmi/tp-ogl.git'
             }
         }
 
