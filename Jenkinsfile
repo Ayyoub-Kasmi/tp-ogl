@@ -65,11 +65,11 @@ pipeline {
                     if (result == 'SUCCESS') {
                         mail to: 'la_kasmi@esi.dz',
                              subject: "Jenkins Build #${env.BUILD_NUMBER} Success",
-                             body: "The build #${env.BUILD_NUMBER} was successful.\n\nCheck it out: ${env.BUILD_URL}"
+                             body: "The build #${env.BUILD_NUMBER} has been successfully completed.\n\nFollow this link for more details: ${env.BUILD_URL}"
                     } else {
                         mail to: 'la_kasmi@esi.dz',
                              subject: "Jenkins Build #${env.BUILD_NUMBER} Failure",
-                             body: "The build #${env.BUILD_NUMBER} failed.\n\nCheck it out: ${env.BUILD_URL}"
+                             body: "The build #${env.BUILD_NUMBER} has failed.\n\nFollow this link for more details: ${env.BUILD_URL}"
                     }
                 }
             }
@@ -82,13 +82,20 @@ pipeline {
         }
 
         success {
-            slackSend color: "good", message: "Message from Jenkins Pipeline: SUCCESS"
             echo 'Pipeline succeeded!'
+            slackSend color: "good", message: "Message from Jenkins Pipeline: SUCCESS"
+            mail to: 'la_kasmi@esi.dz',
+                 subject: "Jenkins Build #${env.BUILD_NUMBER} Success",
+                 body: "The build #${env.BUILD_NUMBER} has been successfully completed.\n\nFollow this link for more details: ${env.BUILD_URL}"
+
         }
 
         failure {
-            slackSend color: "good", message: "Message from Jenkins Pipeline: FAIL"
             echo 'Pipeline failed!'
+            slackSend color: "danger", message: "Message from Jenkins Pipeline: FAIL"
+            mail to: 'la_kasmi@esi.dz',
+                 subject: "Jenkins Build #${env.BUILD_NUMBER} Failure",
+                 body: "The build #${env.BUILD_NUMBER} has failed.\n\nFollow this link for more details: ${env.BUILD_URL}"
         }
     }
 }
