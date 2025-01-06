@@ -23,14 +23,21 @@ pipeline {
                 echo 'Running SonarQube analysis...'
                 script {
                     try {
-//                         sh "./gradlew sonarqube -Dsonar.host.url=${SONAR_HOST_URL}"
-                        sh "./gradlew sonar"
+                        withSonarQubeEnv(){
+                            sh "./gradlew sonar"
+                        }
                     } catch (Exception e) {
                         echo "SonarQube analysis failed: ${e.message}"
                         currentBuild.result = 'FAILURE'
                         error("SonarQube analysis failed")
                     }
                 }
+            }
+        }
+
+        stage('Code Quality'){
+            timeout(time: 2, unit: 'MINUTES') {
+                waitForQualityGate abortPipeline: true
             }
         }
 
@@ -54,24 +61,6 @@ pipeline {
             steps {
                 echo 'Deploying to MyMavenRepo...'
                 sh "./gradlew publish"
-            }
-        }
-
-        stage('Send Notification') {
-            steps {
-                script {
-                    def result = currentBuild.result ?: 'SUCCESS'
-                    echo result
-                    if (result == 'SUCCESS') {
-                        mail to: 'la_kasmi@esi.dz',
-                             subject: "Jenkins Build #${env.BUILD_NUMBER} Success",
-                             body: "The build #${env.BUILD_NUMBER} has been successfully completed.\n\nFollow this link for more details: ${env.BUILD_URL}"
-                    } else {
-                        mail to: 'la_kasmi@esi.dz',
-                             subject: "Jenkins Build #${env.BUILD_NUMBER} Failure",
-                             body: "The build #${env.BUILD_NUMBER} has failed.\n\nFollow this link for more details: ${env.BUILD_URL}"
-                    }
-                }
             }
         }
     }
