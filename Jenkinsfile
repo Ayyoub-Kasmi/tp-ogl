@@ -23,7 +23,7 @@ pipeline {
                 echo 'Running SonarQube analysis...'
                 script {
                     try {
-                        withSonarQubeEnv(){
+                        withSonarQubeEnv('sonar'){
                             sh "./gradlew sonar"
                         }
                     } catch (Exception e) {
