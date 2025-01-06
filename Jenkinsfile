@@ -23,7 +23,8 @@ pipeline {
                 echo 'Running SonarQube analysis...'
                 script {
                     try {
-                        sh "./gradlew sonarqube -Dsonar.host.url=${SONAR_HOST_URL}"
+//                         sh "./gradlew sonarqube -Dsonar.host.url=${SONAR_HOST_URL}"
+                        sh "./gradlew sonar"
                     } catch (Exception e) {
                         echo "SonarQube analysis failed: ${e.message}"
                         currentBuild.result = 'FAILURE'
