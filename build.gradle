@@ -66,11 +66,11 @@ javadoc {
 publishing {
     repositories {
         maven {
-            url myMavenRepoWriteUrl
+            url "https://mymavenrepo.com/repo/w737mswJeLDWUWahCEkm/"
 
             credentials {
-                username myMavenRepoWriteUsername
-                password myMavenRepoWritePassword
+                username "myMavenRepo"
+                password "test"
             }
         }
     }
