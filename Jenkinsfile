@@ -63,11 +63,11 @@ pipeline {
                     def result = currentBuild.result ?: 'SUCCESS'
                     echo result
                     if (result == 'SUCCESS') {
-                        mail to: 'ln_djedjig@esi.dz',
+                        mail to: 'la_kasmi@esi.dz',
                              subject: "Jenkins Build #${env.BUILD_NUMBER} Success",
                              body: "The build #${env.BUILD_NUMBER} was successful.\n\nCheck it out: ${env.BUILD_URL}"
                     } else {
-                        mail to: 'ln_djedjig@esi.dz',
+                        mail to: 'la_kasmi@esi.dz',
                              subject: "Jenkins Build #${env.BUILD_NUMBER} Failure",
                              body: "The build #${env.BUILD_NUMBER} failed.\n\nCheck it out: ${env.BUILD_URL}"
                     }
