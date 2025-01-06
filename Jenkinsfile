@@ -5,6 +5,7 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Running unit tests...'
+                sh 'java --version'
                 sh 'chmod +x gradlew'
                 script {
                     try {
@@ -25,7 +26,7 @@ pipeline {
                 script {
                     try {
                         withSonarQubeEnv('sonar'){
-                            sh "./gradlew sonar -Dsonar.host.url=http://localhost:9000 -Dsonar.login=f52d06077ed22033c3bf0a79933e5dc98890b03d"
+                            sh "./gradlew sonar -Dorg.gradle.java.home=/usr/lib/jvm/java-1.11.0-openjdk-amd64 -Dsonar.host.url=http://localhost:9000 -Dsonar.login=f52d06077ed22033c3bf0a79933e5dc98890b03d"
                         }
                     } catch (Exception e) {
                         echo "SonarQube analysis failed: ${e.message}"
